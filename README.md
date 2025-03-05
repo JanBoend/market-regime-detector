@@ -1,5 +1,9 @@
 # market-regime-detector
 
+![Python](https://img.shields.io/badge/python-3.10+-blue.svg)
+![License](https://img.shields.io/badge/license-MIT-green.svg)
+![Tests](https://img.shields.io/badge/tests-passing-brightgreen.svg)
+
 Gaussian HMM-based market regime classifier. Labels market conditions as bull, bear, or sideways. Designed to plug into systematic trading engines as an optional filter.
 
 ## How it works
