@@ -4,6 +4,8 @@
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 ![Tests](https://img.shields.io/badge/tests-passing-brightgreen.svg)
 
+> **Quant portfolio** — [quant-engine](https://github.com/JanBoend/quant-engine) · [icm-strategies](https://github.com/JanBoend/icm-strategies) · **market-regime-detector** · [options-pricer](https://github.com/JanBoend/options-pricer) · [portfolio-optimizer](https://github.com/JanBoend/portfolio-optimizer)
+
 Gaussian HMM-based market regime classifier. Labels market conditions as bull, bear, or sideways. Designed to plug into systematic trading engines as an optional filter.
 
 ## How it works
