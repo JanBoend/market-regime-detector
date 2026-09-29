@@ -4,7 +4,7 @@
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 ![Tests](https://img.shields.io/badge/tests-passing-brightgreen.svg)
 
-> **Quant portfolio** — [quant-engine](https://github.com/JanBoend/quant-engine) · [icm-strategies](https://github.com/JanBoend/icm-strategies) · **market-regime-detector** · [options-pricer](https://github.com/JanBoend/options-pricer) · [portfolio-optimizer](https://github.com/JanBoend/portfolio-optimizer)
+> **Quant portfolio** — [quant-engine](https://github.com/JanBoend/quant-engine) · **market-regime-detector** · [options-pricer](https://github.com/JanBoend/options-pricer) · [portfolio-optimizer](https://github.com/JanBoend/portfolio-optimizer)
 
 Gaussian HMM-based market regime classifier. Labels market conditions as bull, bear, or sideways. Designed to plug into systematic trading engines as an optional filter.
 
@@ -43,7 +43,7 @@ Known market periods vs model predictions (trained on SPY 2005–2024):
 
 ## Honest results
 
-Tested as an optional filter on the ICM strategy portfolio: adding the regime filter produced a marginal Sharpe improvement (+0.02). Kept as an optional feature with `regime_filter=False` as the production default. The edge is in the strategies, not the filter.
+Tested as an optional filter on a diversified multi-strategy portfolio: adding the regime filter produced only a marginal improvement. Kept as an optional, disabled-by-default feature. The edge is in the strategies, not the filter.
 
 ## Train your own model
 
