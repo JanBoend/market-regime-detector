@@ -1,20 +1,14 @@
 # market-regime-detector
 
+[![CI](https://github.com/JanBoend/market-regime-detector/actions/workflows/ci.yml/badge.svg)](https://github.com/JanBoend/market-regime-detector/actions/workflows/ci.yml)
 ![Python](https://img.shields.io/badge/python-3.10+-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
-![Tests](https://img.shields.io/badge/tests-passing-brightgreen.svg)
 
-> **Quant portfolio** — [quant-engine](https://github.com/JanBoend/quant-engine) · **market-regime-detector** · [options-pricer](https://github.com/JanBoend/options-pricer) · [portfolio-optimizer](https://github.com/JanBoend/portfolio-optimizer)
+A Gaussian HMM that labels market conditions bull/bear/sideways. Meant to sit in front of a strategy as an optional filter, not as a strategy on its own.
 
-Gaussian HMM-based market regime classifier. Labels market conditions as bull, bear, or sideways. Designed to plug into systematic trading engines as an optional filter.
+Features: daily log returns, 20-day rolling volatility, 60-day momentum, short/long vol ratio. A 3-state HMM is trained on these; states get mapped to bull/bear/sideways by ordering mean return.
 
-## How it works
-
-Features used: daily log returns, 20-day rolling volatility, 60-day momentum, vol ratio (short-term/long-term vol).
-
-A 3-state Gaussian HMM is trained on these features. States are mapped to bull/bear/sideways by ordering their mean return (highest return state = bull, lowest = bear).
-
-## Quick start
+## Try it
 
 ```python
 from detector.hmm_detector import RegimeDetector
@@ -29,9 +23,9 @@ print(labels.tail())
 # 2024-12-24    bull
 ```
 
-## Validation
+## Does it actually work
 
-Known market periods vs model predictions (trained on SPY 2005–2024):
+Checked against known periods, trained on SPY 2005–2024:
 
 | Period | Known | Model |
 |---|---|---|
@@ -41,11 +35,9 @@ Known market periods vs model predictions (trained on SPY 2005–2024):
 | 2022 | Bear | bear ✓ |
 | 2023–2024 | Bull | bull ✓ |
 
-## Honest results
+Tested as a filter on a diversified multi-strategy portfolio and the improvement was marginal, so it ships disabled by default. The edge lives in the strategies, this is a nice-to-have.
 
-Tested as an optional filter on a diversified multi-strategy portfolio: adding the regime filter produced only a marginal improvement. Kept as an optional, disabled-by-default feature. The edge is in the strategies, not the filter.
-
-## Train your own model
+## Train your own
 
 ```python
 import yfinance as yf
@@ -57,21 +49,21 @@ det.fit(spy)
 det.save("models/my_model.pkl")
 ```
 
-## Plug into quant-engine
+## Wiring it into a strategy
 
 ```python
 from detector.hmm_detector import RegimeDetector
 
 detector = RegimeDetector.load("models/hmm_spy.pkl")
 regime   = detector.predict(prices)  # pd.Series with 'bull'/'bear'/'sideways'
-# Filter trades: only enter when regime == 'bull'
+# only enter when regime == 'bull'
 ```
 
-## Running tests
+## Tests
 
 ```bash
 pip install -r requirements.txt
 pytest tests/ -v
 ```
 
-4 tests: feature computation, valid labels, correct length, save/load round-trip.
+4 tests: feature computation, valid label set, output length, save/load round-trip.
